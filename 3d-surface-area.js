@@ -9,7 +9,7 @@ function surfaceArea(A) {
       const uN = i !== 0 ? A[i - 1][j] : null;
 
       console.log(`i: ${i}, j: ${j} = `, areaOfOneColumn(cH, lN, rN, uN, dN));
-      totalArea += areaOfOneColumn(cH, lN, rN, uN, dN)
+      totalArea += areaOfOneColumn(cH, lN, rN, uN, dN);
     }
   }
 
@@ -17,7 +17,7 @@ function surfaceArea(A) {
 }
 
 /**
- * 
+ *
  * @param {number} cH  - column height
  * @param {number | null} lN  - left neighbour heigh
  * @param {number | null} rN  - right neighbour heigh
@@ -49,12 +49,8 @@ const areaOfOneColumn = (cH, lN, rN, uN, dN) => {
   }
 
   return areaWithoutNeighbours - lNH - rNH - uNH - dNH;
-}
+};
 
-const areaOfOneColumnWithoutNeighbours = n => ((n * 4) + 2);
+const areaOfOneColumnWithoutNeighbours = n => n * 4 + 2;
 
-console.log(surfaceArea([
-  [1, 3, 4],
-  [2, 2, 3],
-  [1, 2, 4],
-]));
+console.log(surfaceArea([[1, 3, 4], [2, 2, 3], [1, 2, 4]]));
