@@ -52,7 +52,8 @@ function gridSearch(G, P) {
 
   for (let i = 0; i <= gAS2DArray.length - numRows; i++) {
     for (let j = 0; j <= gAS2DArray[i].length - numColumns; j++) {
-      if (gAS2DArray[i][j] === pAS2DArray[0][0]) {
+      const firstLine = gAS2DArray[i].join('').slice(j, j + numColumns);
+      if (firstLine === P[0]) {
         const subMatrix = getSubMatrix(G, numRows, numColumns, i, j);
         if (isEqual2DArrays(pAS2DArray, subMatrix)) {
           return "YES";
@@ -65,7 +66,7 @@ function gridSearch(G, P) {
 }
 
 const [GDATA, PDATA] = ["input1.txt", "input2.txt"]
-  .map(path => fs.readFileSync(path))
+.map(path => fs.readFileSync(path))
   .map(String)
   .map(data => data.split("\n"));
 
