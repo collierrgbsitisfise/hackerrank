@@ -1,10 +1,9 @@
 function absolutePermutation(n, k) {
   const setInput = new Array(n).fill(0).map((_, i) => ++i);
-  const allPermutations = getPermutations(setInput);
-  for (let i = 0; i < allPermutations.length; i++) {
-    if (isAbsolutePermutation(allPermutations[i], k)) {
-      return allPermutations[i];
-    }
+  const corectPerm = getPermutations(setInput, k);
+
+  if (corectPerm) {
+    return corectPerm;
   }
 
   return -1;
@@ -21,12 +20,12 @@ const isAbsolutePermutation = (arr, k) => {
   return isAbsolute;
 }
 
-const getPermutations = arr => {
-  let result = [];
-
+const getPermutations = (arr, k) => {
+  let res = false;
   const permutations = (arr, permut = []) => {
-    if (!arr.length) {
-      result.push(permut);
+    if (!arr.length && isAbsolutePermutation(permut, k)) {
+      res = permut;
+      return;
     }
 
     for (let i = 0; i < arr.length; i++) {
@@ -38,8 +37,9 @@ const getPermutations = arr => {
 
   permutations(arr);
 
-  return result;
+  return res;
 }
+
 
 
 console.log(absolutePermutation(10, 5));
