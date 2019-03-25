@@ -6,14 +6,16 @@ function colorize(color, output) {
 }
 
 const input = [
-  "GGGGGGGG",
-  "GBGBGGBG",
-  "GBGBGGBG",
-  "GGGGGGGG",
-  "GBGBGGBG",
-  "GGGGGGGG",
-  "GBGBGGBG",
-  "GGGGGGGG"
+  "BBBBBGGBGG",
+  "GGGGGGGGGG",
+  "GGGGGGGGGG",
+  "BBBBBGGBGG",
+  "BBBBBGGBGG",
+  "GGGGGGGGGG",
+  "BBBBBGGBGG",
+  "GGGGGGGGGG",
+  "BBBBBGGBGG",
+  "GGGGGGGGGG"
 ];
 
 const coloredOutput = grid => {
@@ -37,9 +39,6 @@ function twoPluses(grid) {
   for (let i = 0; i < gridAs2DArray.length; i++) {
     for (let j = 0; j < gridAs2DArray[i].length; j++) {
       coloredOutput(gridAs2DArray);
-      console.log();
-      console.log("----------------------------");
-      console.log();
       gridAs2DArray[i][j] === "G" &&
         plusAreases.push(
           getPlusAreaByCordinates(
@@ -47,7 +46,8 @@ function twoPluses(grid) {
               i,
               j
             },
-            gridAs2DArray
+            gridAs2DArray,
+            plusAreases
           )
         );
     }
@@ -61,12 +61,14 @@ function twoPluses(grid) {
   return plusAreases[0] * plusAreases[1];
 }
 
-const getPlusAreaByCordinates = (cordinates, arr) => {
+const getPlusAreaByCordinates = (cordinates, arr, areas) => {
   let { i, j } = cordinates;
-
+  arr[i][j] = areas.length;
   let currentArr = 1;
 
   while (true) {
+    let overlapedPluses = [];
+
     //check left
     if (!arr[i][j - currentArr] || arr[i][j - currentArr] === "B") {
       currentArr--;
@@ -91,11 +93,47 @@ const getPlusAreaByCordinates = (cordinates, arr) => {
       break;
     }
 
-    arr[i][j - currentArr] = "K";
-    arr[i][j + currentArr] = "K";
-    arr[i + currentArr][j] = "K";
-    arr[i - currentArr][j] = "K";
-    arr[i][j] = "K";
+    if (arr[i][j - currentArr] !== "G") {
+      overlapedPluses.push(areas[arr[i][j - currentArr]]);
+      if (areas[arr[i][j - currentArr]] > currentArr * 4 + 1) {
+        currentArr--;
+        break;
+      }
+    }
+
+    if (arr[i][j - currentArr] !== "G") {
+      overlapedPluses.push(areas[arr[i][j + currentArr]]);
+      if (areas[arr[i][j + currentArr]] > currentArr * 4 + 1) {
+        currentArr--;
+        break;
+      }
+    }
+
+    if (arr[i][j - currentArr] !== "G") {
+      overlapedPluses.push(areas[arr[i + currentArr][j]]);
+      if (areas[arr[i + currentArr][j]] > currentArr * 4 + 1) {
+        currentArr--;
+        break;
+      }
+    }
+
+    if (arr[i][j - currentArr] !== "G") {
+      overlapedPluses.push(areas[arr[i - currentArr][j]]);
+      if (areas[arr[i - currentArr][j]] > currentArr * 4 + 1) {
+        currentArr--;
+        break;
+      }
+    }
+
+    // for (let i = 0; i < arr.length; i++) {
+    //   for (let j = 0; j < arr[i].length; j++) {
+    //     if (overlapedPluses)
+    //   }
+    // }
+    arr[i][j - currentArr] = areas.length;
+    arr[i][j + currentArr] = areas.length;
+    arr[i + currentArr][j] = areas.length;
+    arr[i - currentArr][j] = areas.length;
     currentArr++;
   }
 
