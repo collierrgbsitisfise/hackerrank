@@ -2,21 +2,24 @@ const BOMB = "O";
 const NO_BOMB = ".";
 
 const smapleInput = [
-  "O.....O",
   ".......",
-  ".O..O..",
-  "...O...",
-  ".......",
-  "O.....O"
+  "...O.O.",
+  "....O..",
+  "..O....",
+  "OO...OO",
+  "OO.O..."
 ];
 
 function bomberMan(n, grid) {
+  const numberOfIterations = Math.floor(n / 3);
+  const notFullIteration = (n % 3) + 1;
+
   //special keyses
   if (n <= 1) {
     return grid;
   }
 
-  if (n % 2 === 0) {
+  if (n === 2 || notFullIteration === 3) {
     let result = [];
     for (let i = 0; i < grid.length; i++) {
       result.push(BOMB.repeat(grid[i].length));
@@ -24,14 +27,16 @@ function bomberMan(n, grid) {
     return result;
   }
 
-  const v1 = twoDArrayInArrayOfStrings(threeSecondIteration(arrayOfStringTo2DArray(grid)));
-  const v2 = twoDArrayInArrayOfStrings(threeSecondIteration(arrayOfStringTo2DArray(v1)));
-
-  if (n % 4 === 1) {
-    return v1;
+  let result = arrayOfStringTo2DArray(grid);
+  for (let i = 1; i <= numberOfIterations; i++) {
+    result = threeSecondIteration(result);
   }
 
-  return v2;
+  if (notFullIteration) {
+    result = threeSecondIteration(result, notFullIteration);
+  }
+
+  return twoDArrayInArrayOfStrings(result);
 }
 
 const arrayOfStringTo2DArray = arrOfStrings => {
@@ -93,16 +98,26 @@ const exploreByCordinates = (grid, cordinates) => {
   return grid;
 };
 
-const threeSecondIteration = (grid) => {
+const threeSecondIteration = (grid, s = 3) => {
+  if (s === 1) {
+    return grid;
+  }
+
+  if (s === 2) {
+    return grid;
+  }
+
   const cordinates = getBombsCordinates(grid);
 
+  //fill empty cells with new bombs
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       grid[i][j] = BOMB;
     }
   }
 
-  return exploreByCordinates(grid, cordinates);
+  const gridAfterExplore = exploreByCordinates(grid, cordinates);
+  return gridAfterExplore;
 };
 
-console.log(bomberMan(9, smapleInput));
+console.log(bomberMan(2, smapleInput));
