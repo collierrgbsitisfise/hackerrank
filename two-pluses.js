@@ -20,9 +20,11 @@ const coloredOutput = grid => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === "G") {
-        process.stdout.write(colorize(91, grid[i][j]));
+        process.stdout.write(colorize(92, " " + grid[i][j] + " "));
+      } else if (grid[i][j] === "B") {
+        process.stdout.write(colorize(91, " " + grid[i][j] + " "));
       } else {
-        process.stdout.write(colorize(92, grid[i][j]));
+        process.stdout.write(colorize(94, " " + grid[i][j] + " "));
       }
     }
     process.stdout.write("\n");
@@ -32,9 +34,12 @@ const coloredOutput = grid => {
 function twoPluses(grid) {
   let plusAreases = [];
   const gridAs2DArray = grid.map(str => str.split(""));
-  coloredOutput(gridAs2DArray);
   for (let i = 0; i < gridAs2DArray.length; i++) {
     for (let j = 0; j < gridAs2DArray[i].length; j++) {
+      coloredOutput(gridAs2DArray);
+      console.log();
+      console.log("----------------------------");
+      console.log();
       gridAs2DArray[i][j] === "G" &&
         plusAreases.push(
           getPlusAreaByCordinates(
@@ -63,33 +68,34 @@ const getPlusAreaByCordinates = (cordinates, arr) => {
 
   while (true) {
     //check left
-    if (!arr[i][j - currentArr] || arr[i][j - currentArr] !== "G") {
+    if (!arr[i][j - currentArr] || arr[i][j - currentArr] === "B") {
       currentArr--;
       break;
     }
 
     // check right
-    if (!arr[i][j + currentArr] || arr[i][j + currentArr] !== "G") {
+    if (!arr[i][j + currentArr] || arr[i][j + currentArr] === "B") {
       currentArr--;
       break;
     }
 
     // check down
-    if (!arr[i + currentArr] || arr[i + currentArr][j] !== "G") {
+    if (!arr[i + currentArr] || arr[i + currentArr][j] === "B") {
       currentArr--;
       break;
     }
 
     //check up
-    if (!arr[i - currentArr] || arr[i - currentArr][j] !== "G") {
+    if (!arr[i - currentArr] || arr[i - currentArr][j] === "B") {
       currentArr--;
       break;
     }
 
-    arr[i][j - currentArr] = "B";
-    arr[i][j + currentArr] = "B";
-    arr[i + currentArr][j] = "B";
-    arr[i - currentArr][j] = "B";
+    arr[i][j - currentArr] = "K";
+    arr[i][j + currentArr] = "K";
+    arr[i + currentArr][j] = "K";
+    arr[i - currentArr][j] = "K";
+    arr[i][j] = "K";
     currentArr++;
   }
 
