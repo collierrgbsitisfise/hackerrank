@@ -125,62 +125,10 @@ const getPlusAreaByCordinates = (cordinates, arr, idx) => {
       break;
     }
 
-    if (arr[i][j - currentArr] !== "G") {
-      overlapedPluses.push([i, j - currentArr]);
-      overIdx.push(arr[i][j - currentArr]);
-      if (getAreaByIndex(arr[i][j - currentArr], arr) > currentArr * 4 + 1) {
-        currentArr--;
-        break;
-      }
-    }
-
-    if (arr[i][j + currentArr] !== "G") {
-      overlapedPluses.push([i, j + currentArr]);
-      overIdx.push(arr[i][j + currentArr]);
-      if (getAreaByIndex(arr[i][j + currentArr], arr) > currentArr * 4 + 1) {
-        currentArr--;
-        break;
-      }
-    }
-
-    if (arr[i + currentArr][j] !== "G") {
-      overlapedPluses.push([i + currentArr, j]);
-      overIdx.push(arr[i + currentArr][j]);
-      if (getAreaByIndex(arr[i + currentArr][j], arr) > currentArr * 4 + 1) {
-        currentArr--;
-        break;
-      }
-    }
-
-    if (arr[i - currentArr][j] !== "G") {
-      overlapedPluses.push([i - currentArr, j]);
-      overIdx.push(arr[i - currentArr][j]);
-      if (getAreaByIndex(arr[i - currentArr][j], arr) > currentArr * 4 + 1) {
-        currentArr--;
-        break;
-      }
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].length; j++) {
-        if (overlapedPluses.find(it => it[0] === i && it[1] === j)) {
-          arr[i][j] = idx;
-        }
-      }
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].length; j++) {
-        if (overIdx.includes(arr[i][j])) {
-          arr[i][j] = "G";
-        }
-      }
-    }
-
-    arr[i][j - currentArr] = idx;
-    arr[i][j + currentArr] = idx;
-    arr[i + currentArr][j] = idx;
-    arr[i - currentArr][j] = idx;
+    arr[i][j - currentArr] = "B";
+    arr[i][j + currentArr] = "B";
+    arr[i + currentArr][j] = "B";
+    arr[i - currentArr][j] = "B";
     currentArr++;
   }
 
