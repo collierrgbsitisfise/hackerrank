@@ -1,11 +1,21 @@
 function minimumSwaps(arr) {
+  const newArr = [...arr];
   let result = 0;
-  for (let i = 0; i < arr.length; i++) {
-    !!(arr[i] - (i + 1)) && ++result;
-  }
+  let wasSwapedAnyElement = false;
+  do {
+    wasSwapedAnyElement = false;
+    for (let i = 0; i < newArr.length; i++) {
+      if (newArr[i] !== i + 1) {
+        wasSwapedAnyElement = true;
+        let tmp = newArr[newArr[i] - 1];
+        newArr[newArr[i] - 1] = newArr[i];
+        newArr[i] = tmp;
+        ++result;
+      }
+    }
+  } while (wasSwapedAnyElement);
 
-  console.log("NOT ON PLACE : ", result);
-  return result > 0 ? result - 1 : 0;
+  return result > 0 ? result : 0;
 }
 
 const input = [
@@ -60,4 +70,5 @@ const input = [
   25,
   19
 ];
+
 console.log(minimumSwaps(input));
