@@ -2,17 +2,26 @@
 // 1 2 3 4 5
 
 function rotLeft(arr, n) {
-  const arrLength = arr.length;
   const result = [];
-  const modulo = arrLength % n;
+  const arrLength = arr.length;
 
-  if (!modulo && n !== 1) {
+  if (n === arrLength || n === 0) {
     return arr;
   }
 
+  const nIsBiggerOrThanLength = n > arrLength;
+  const getIdxForNGratherThanN = (i, n) =>
+    i - n >= 0 ? i - n : arrLength - Math.abs(i - n);
+
   for (let i = 0; i < arrLength; i++) {
-    const currentValue = i + 1;
-    const newIdx = i - n >= 0 ? i - n : n !== 1 ? i + modulo : arrLength - n;
+    const currentValue = arr[i];
+    const newIdx =
+      i - n >= 0
+        ? i - n
+        : !nIsBiggerOrThanLength
+        ? arrLength - Math.abs(i - n)
+        : getIdxForNGratherThanN(i, n);
+
     result[newIdx] = currentValue;
   }
 
@@ -20,4 +29,27 @@ function rotLeft(arr, n) {
 }
 
 // 5 1 2 3 4
-console.log(rotLeft(5, 1));
+const arrInput = [
+  41,
+  73,
+  89,
+  7,
+  10,
+  1,
+  59,
+  58,
+  84,
+  77,
+  77,
+  97,
+  58,
+  1,
+  86,
+  58,
+  26,
+  10,
+  86,
+  51
+];
+
+console.log(rotLeft(arrInput, 10));
