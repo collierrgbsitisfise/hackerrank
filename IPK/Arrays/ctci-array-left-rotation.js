@@ -1,14 +1,13 @@
 // 5 4
 // 1 2 3 4 5
 
-function rotLeft(arrLength, n) {
+function rotLeft(arr, n) {
+  const arrLength = arr.length;
   const result = [];
   const modulo = arrLength % n;
 
   if (!modulo && n !== 1) {
-    return Array(arrLength)
-      .fill(0)
-      .map((_, idx) => idx + 1);
+    return arr;
   }
 
   for (let i = 0; i < arrLength; i++) {
