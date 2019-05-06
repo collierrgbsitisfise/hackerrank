@@ -2,17 +2,19 @@
 // queries: [[1, 2, 100], [2, 5, 100], [3, 4, 100]];
 // Expected Output: 200
 function arrayManipulation(n, queries) {
-  const initArray = Array(n).fill(0);
-  for (let query of queries) {
-    const value = query[2];
-    const startIdx = query[0] - 1;
-    const endIdx = query[1] - 1;
-    for (let i = startIdx; i <= endIdx; i++) {
-      initArray[i] += value;
+  let max = 0;
+  for (let i = 1; i <= n; i++) {
+    let current = 0;
+    for (let query of queries) {
+      if (i >= query[0] && i <= query[1]) {
+        current += query[2];
+      }
     }
+
+    max = Math.max(max, current);
   }
 
-  return Math.max(...initArray);
+  return max;
 }
 
 const queries = [[1, 2, 100], [2, 5, 100], [3, 4, 100]];
