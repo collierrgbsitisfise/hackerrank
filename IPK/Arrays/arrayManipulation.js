@@ -3,15 +3,21 @@
 // Expected Output: 200
 function arrayManipulation(n, queries) {
   let max = 0;
-  for (let i = 1; i <= n; i++) {
-    let current = 0;
-    for (let query of queries) {
-      if (i >= query[0] && i <= query[1]) {
-        current += query[2];
-      }
-    }
+  let hashMapHelper = new Map();
+  for (let query of queries) {
+    for (let i = query[0]; i <= query[1]; i++) {
+      const prevValue = hashMapHelper.get(i);
+      const newVlaue =
+        typeof hashMapHelper.get(i) === "undefined"
+          ? query[2]
+          : prevValue + query[2];
 
-    max = Math.max(max, current);
+      hashMapHelper.set(i, newVlaue);
+    }
+  }
+
+  for (const [_, value] of hashMapHelper) {
+    max = Math.max(max, value);
   }
 
   return max;
