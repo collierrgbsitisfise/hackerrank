@@ -12,12 +12,9 @@ function arrayManipulation(n, queries) {
           ? query[2]
           : prevValue + query[2];
 
+      max = Math.max(max, newVlaue);
       hashMapHelper[i] = newVlaue;
     }
-  }
-
-  for (const value of Object.values(hashMapHelper)) {
-    max = Math.max(max, value);
   }
 
   return max;
