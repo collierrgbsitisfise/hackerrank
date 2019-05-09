@@ -7,14 +7,15 @@
 // two times three is not four
 // two times two is four
 // result: No
-const fromArrayToHasMapaWordNumber = arr =>
-  arr.reduce(
-    (acc, curr) => ({
-      ...acc,
-      [curr]: acc[curr] ? ++acc[curr] : 1
-    }),
-    {}
-  );
+const fromArrayToHasMapaWordNumber = words => {
+  let result = {};
+
+  for (let word of words) {
+    result[word] = !!result[word] ? result[word] + 1 : 1;
+  }
+
+  return result;
+};
 
 function checkMagazine(magazine, note) {
   if (magazine.length < note.length) {
