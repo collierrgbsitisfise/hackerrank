@@ -19,9 +19,9 @@ const fromArrayToHasMapaWordNumber = words => {
 
 const fromArrayToHasMapaWordNumber2 = words =>
   words.reduce(
-    (curr, acc) => ({
+    (acc, curr) => ({
       ...acc,
-      [acc]: !!acc[curr] ? acc[curr] + 1 : 1
+      [curr]: !!acc[curr] ? acc[curr] + 1 : 1
     }),
     {}
   );
@@ -51,18 +51,18 @@ const notInput = "give one grand today one".split(" ");
 console.log(checkMagazine(magazineInput, notInput));
 
 //Performance test for loop vs reduce
-const bigInput1 = Array(100000000).map(
-  () => Math.floor(Math.random() * 100000000) + 1 + ""
-);
+const bigInput1 = new Array(1000000)
+  .fill(0)
+  .map(() => Math.floor(Math.random() * 1000000) + 1 + "");
 
-const bigInput2 = Array(100000000).map(
-  () => Math.floor(Math.random() * 100000000) + 1 + ""
-);
+const bigInput2 = new Array(1000000)
+  .fill(0)
+  .map(() => Math.floor(Math.random() * 1000000) + 1 + "");
 
 console.time("T2");
-fromArrayToHasMapaWordNumber2(bigInput2);
+console.log("res2 : ", fromArrayToHasMapaWordNumber2(bigInput2));
 console.timeEnd("T2");
 
 console.time("T1");
-fromArrayToHasMapaWordNumber(bigInput1);
+console.log("res1 : ", fromArrayToHasMapaWordNumber(bigInput2));
 console.timeEnd("T1");
