@@ -28,17 +28,16 @@ function bigSorting(unsorted) {
   let wasAnySwap = false;
 
   do {
-    console.log("inside");
+    wasAnySwap = false;
     for (let i = 0; i < unsorted.length - 1; i++) {
       if (compareTwoBigInt(unsorted[i], unsorted[i + 1])) {
-        console.log("INSIDE");
         wasAnySwap = true;
         [unsorted[i], unsorted[i + 1]] = [unsorted[i + 1], unsorted[i]];
       }
     }
   } while (wasAnySwap);
 
-  // return unsorted;
+  return unsorted;
 }
 
 const compareTwoBigInt = (a, b) => {
