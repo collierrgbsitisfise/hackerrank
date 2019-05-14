@@ -25,19 +25,7 @@ const input = fs
   .split("\n");
 
 function bigSorting(unsorted) {
-  let wasAnySwap = false;
-
-  do {
-    wasAnySwap = false;
-    for (let i = 0; i < unsorted.length - 1; i++) {
-      if (compareTwoBigInt(unsorted[i], unsorted[i + 1])) {
-        wasAnySwap = true;
-        [unsorted[i], unsorted[i + 1]] = [unsorted[i + 1], unsorted[i]];
-      }
-    }
-  } while (wasAnySwap);
-
-  return unsorted;
+  return quickSort(unsorted, 0, unsorted.length - 1);
 }
 
 const compareTwoBigInt = (a, b) => {
@@ -57,5 +45,48 @@ const compareTwoBigInt = (a, b) => {
     return false;
   }
 };
+/*reolve using quickSort not bubleSort*/
+function swap(items, firstIndex, secondIndex) {
+  const temp = items[firstIndex];
+  items[firstIndex] = items[secondIndex];
+  items[secondIndex] = temp;
+}
+
+function partition(items, left, right) {
+  let pivot = items[Math.floor((right + left) / 2)];
+  let leftIdx = left;
+  let rightIdx = right;
+
+  while (leftIdx <= rightIdx) {
+    while (compareTwoBigInt(items[rightIdx], pivot)) {
+      rightIdx--;
+    }
+
+    while (compareTwoBigInt(pivot, items[leftIdx])) {
+      leftIdx++;
+    }
+
+    if (leftIdx <= rightIdx) {
+      swap(items, leftIdx, rightIdx);
+      leftIdx++;
+      rightIdx--;
+    }
+  }
+  return leftIdx;
+}
+
+function quickSort(items, left, right) {
+  let index;
+  if (items.length > 1) {
+    index = partition(items, left, right);
+    if (left < index - 1) {
+      quickSort(items, left, index - 1);
+    }
+    if (index < right) {
+      quickSort(items, index, right);
+    }
+  }
+  return items;
+}
 
 console.log(bigSorting(input));
